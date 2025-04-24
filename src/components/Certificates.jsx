@@ -7,8 +7,8 @@ const Certificates = () => {
       title: 'Complete Core and Advanced Java',
       issuer: 'Board Infinity',
       date: 'June 2024',
-      image: '/api/placeholder/600/400',
-      link: '#', // Add your certificate link here
+      image: '../resources/java.png',
+      link: 'https://drive.google.com/file/d/1JAivN1cRiP_F_6QhYoBEsPwUHWcAPw06/view?usp=drive_link', // Add your certificate link here
       skills: ['Java', 'Core Java', 'Advanced Java']
     },
     {
@@ -16,8 +16,8 @@ const Certificates = () => {
       title: 'The Complete Full-Stack Web Development BootCamp',
       issuer: 'Udemy - Dr. Angela Yu',
       date: 'November 2025',
-      image: '/api/placeholder/600/400',
-      link: '#', // Add your certificate link here
+      image: '../resources/full.png',
+      link: 'https://drive.google.com/file/d/1x179cmEaZp06VldH3n32ysi2jMrIjiUE/view?usp=drive_link', // Add your certificate link here
       skills: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'React', 'MongoDB']
     },
     {
@@ -25,8 +25,8 @@ const Certificates = () => {
       title: 'Learn Blockchain and Cryptocurrency from Beginning',
       issuer: 'Udemy',
       date: 'December 2024',
-      image: '/api/placeholder/600/400',
-      link: '#', // Add your certificate link here
+      image: '../resources/blockchain.png',
+      link: 'https://drive.google.com/file/d/13BiwDKJq5WbMVnQbW63WUUHQ3cgbskdb/view?usp=drive_link', // Add your certificate link here
       skills: ['Blockchain', 'Cryptocurrency', 'Smart Contracts']
     }
   ];

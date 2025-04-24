@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="container footer-container">
         <div className="footer-content">
           <div className="footer-logo">
-            <a href="#home">Your<span>Name</span></a>
+            <a href="#home">Jaya<span>Kiran</span></a>
           </div>
           
           <div className="footer-social">
@@ -31,6 +31,8 @@ const Footer = () => {
               <li><a href="#home">Home</a></li>
               <li><a href="#about">About</a></li>
               <li><a href="#skills">Skills</a></li>
+              <li><a href="#certificates">Certificates</a></li>
+
               <li><a href="#projects">Projects</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
@@ -38,7 +40,7 @@ const Footer = () => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; {currentYear} YourName. All Rights Reserved.</p>
+          <p>&copy; {currentYear} Jaya Kiran. All Rights Reserved.</p>
           <p className="footer-credit">Designed & Built with <i className="fas fa-heart"></i> using React</p>
         </div>
       </div>

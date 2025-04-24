@@ -9,6 +9,8 @@ import Footer from './components/Footer';
 import Cursor from './components/Cursor';
 import Certificates from './components/Certificates';
 import './App.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');

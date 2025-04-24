@@ -28,6 +28,30 @@ html {
 
 body {
   font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  transition: font-size 0.3s ease, color 0.3s ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px; /* Adjust for base font size */
+}
+a:focus, button:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 4px;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem; /* Base font size set to 16px */
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--bg-color);
@@ -945,7 +969,7 @@ z-index: 9999;
   color: #ff6b6b;
 }
 
-/* Custom Cursor
+Custom Cursor
 .cursor,
 .cursor-dot {
   position: fixed;
@@ -980,9 +1004,9 @@ z-index: 9999;
 
 .cursor-dot.hover {
   opacity: 0;
-} */
+}
 
-/* Media Queries */
+
 @media screen and (max-width: 768px) {
   .section-title {
     font-size: 2rem;
@@ -1102,41 +1126,7 @@ z-index: 9999;
   transform: translateY(0);
 }
 
-/* Add this script to your JavaScript file for revealing elements on scroll */
-/*
-document.addEventListener('DOMContentLoaded', function() {
-  const scrollElements = document.querySelectorAll('.fade-in-up');
-  
-  const elementInView = (el, percentageScroll = 100) => {
-    const elementTop = el.getBoundingClientRect().top;
-    return (
-      elementTop <= 
-      ((window.innerHeight || document.documentElement.clientHeight) * (percentageScroll/100))
-    );
-  };
-  
-  const displayScrollElement = (element) => {
-    element.classList.add('visible');
-  };
-  
-  const handleScrollAnimation = () => {
-    scrollElements.forEach((el) => {
-      if (elementInView(el, 80)) {
-        displayScrollElement(el);
-      }
-    })
-  }
-  
-  window.addEventListener('scroll', () => {
-    handleScrollAnimation();
-  });
-  
-  // Initial check
-  handleScrollAnimation();
-});
-*/
 
-/* Certificates Section Styling */
 .certificates {
   padding: 100px 0;
   background-color: #f9f9f9;
@@ -1294,3 +1284,19 @@ document.addEventListener('DOMContentLoaded', function() {
   color: white;
 }
 
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 2rem; /* Adjust the spacing as needed */
+  /* other styles */
+}
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

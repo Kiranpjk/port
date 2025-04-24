@@ -80,7 +80,8 @@ const Contact = () => {
   return (
     <section id="contact" className="contact">
       <div className="container contact-container">
-        <h2 className="section-title">Get In Touch</h2>
+      <h2 className="section-title mb-6">Get In Touch</h2>
+
         
         <div className="contact-content">
           <div className="contact-info">
@@ -115,16 +116,16 @@ const Contact = () => {
             </div>
             
             <div className="social-links">
-              <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/Kiranpjk" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-github"></i>
               </a>
-              <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer">
+              <a href="https://linkedin.com/in/jaya-kiran/" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-linkedin-in"></i>
               </a>
-              <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+              <a href="https://twitter.com/jaya-kiran" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-twitter"></i>
               </a>
-              <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer">
+              <a href="https://instagram.com/m__r_unknown" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-instagram"></i>
               </a>
             </div>

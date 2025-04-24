@@ -8,7 +8,7 @@ const About = () => {
         <div className="about-content">
           <div className="about-image">
             <div className="image-wrapper">
-              <img src=".\resources\IMG-20250208-WA0053.jpg" alt="Your Name" />
+              <img src="..\resources\IMG-20250208-WA0053.jpg" alt="Your Name" />
             </div>
           </div>
           <div className="about-text">
@@ -33,7 +33,7 @@ const About = () => {
   </div>
 </div>
             
-            <a href="../resources/JayaKirangeneral.pdf" className="btn primary-btn download-btn" download>
+            <a href="https://drive.google.com/file/d/1-QxXOEM6XzAhwCK07q3Ugia301judi0L/view?usp=sharing" className="btn primary-btn download-btn" download>
               <i className="fas fa-download"></i> Download Resume
             </a>
           </div>
