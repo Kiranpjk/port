@@ -1,6 +1,6 @@
 Portfolio Website
 Welcome to my personal Portfolio Website, designed to showcase my projects, skills, and achievements in an elegant and user-friendly way!
-🌐 Live Demo: Visit My Portfolio
+🌐 Live Demo: https://port-liart-three.vercel.app/
 
 🛠️ Technologies Used
 - React: For building the interactive user interface.
@@ -14,17 +14,7 @@ Welcome to my personal Portfolio Website, designed to showcase my projects, skil
 - Showcasing My Skills & Projects: Highlighting my expertise and providing insight into my work.
 - Clean Code Architecture: Structured and maintainable codebase for future scalability.
 
-🚀 How to Run Locally
-- Clone the repository:
-git clone https://github.com/your-username/your-repo-name.git
-- Navigate to the project directory:
-cd your-repo-name
-- Install dependencies:
-npm install
-- Start the development server:
-npm start
-- Open the app in your browser:
-http://localhost:3000
+
 
 
 
