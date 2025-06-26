@@ -13,7 +13,7 @@ const About = () => {
           </div>
           <div className="about-text">
             <div>
-  <p>Hello! I'm <strong>Jaya Kiran</strong>, a passionate frontend developer specializing in creating interactive and responsive web applications. With expertise in React, JavaScript, and modern UI/UX design principles, I build digital experiences that combine aesthetics with functionality.</p>
+  <p>Hello! I'm <strong>Jaya Kiran</strong>, a passionate frontend developer and UI/UX desginer specializing in creating interactive and responsive web applications. With expertise in React, JavaScript, and modern UI/UX design principles, I build digital experiences that combine aesthetics with functionality.</p>
   
   <p>I have a background in <strong>Computer Science Engineering</strong> from Lovely Professional University with experience in UI/UX design through my internship at DevLooms and freelance work with APSPDCL.</p>
   
