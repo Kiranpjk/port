@@ -2,10 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    unoptimized: true,
     domains: ['avatars.githubusercontent.com', 'github.com'],
   },
-  output: 'export',
-  trailingSlash: true,
+  // For static export (GitHub Pages)
+  // output: 'export',
+  // trailingSlash: true,
 };
 
 export default nextConfig;
