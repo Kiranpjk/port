@@ -1,6 +1,7 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/modules';
+import { generateFallbackImage } from '../utils/imageFallback';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
@@ -79,7 +80,7 @@ const Certificates = () => {
                 <div className="certificate-card">
                   <div className="certificate-img">
                     <img src={certificate.image} alt={certificate.title} onError={(e) => {
-                      e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23f0f0f0" width="400" height="300"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="18"%3E' + certificate.title + '%3C/text%3E%3C/svg%3E';
+                      e.target.src = generateFallbackImage(certificate.title);
                     }} />
                     <div className="certificate-overlay">
                       <a href={certificate.link} target="_blank" rel="noopener noreferrer" className="view-certificate">

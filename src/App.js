@@ -47,9 +47,6 @@ function App() {
   // GSAP Scroll Animations
   useEffect(() => {
     if (!isLoading) {
-      // Smooth scroll
-      gsap.registerPlugin(ScrollTrigger);
-
       // Animate section titles
       gsap.utils.toArray('.section-title').forEach((title) => {
         gsap.from(title, {
