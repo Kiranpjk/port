@@ -3,9 +3,19 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     unoptimized: true,
-    domains: ['avatars.githubusercontent.com', 'github.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'github.com',
+      },
+    ],
   },
-  // For static export (GitHub Pages)
+  // Disabled static export to avoid build-time API calls
+  // For Vercel deployment, this is not needed
   // output: 'export',
   // trailingSlash: true,
 };
