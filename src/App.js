@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Header from './components/Header'
 import Hero from './components/Hero';
 import About from './components/About';
@@ -11,6 +13,8 @@ import Certificates from './components/Certificates';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -28,7 +32,6 @@ function App() {
       
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
         if (window.scrollY >= sectionTop - 200) {
           current = section.getAttribute('id');
         }
@@ -41,33 +44,58 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Animation effect for scrolling elements
+  // GSAP Scroll Animations
   useEffect(() => {
-    const handleScrollAnimation = () => {
-      const scrollElements = document.querySelectorAll('.fade-in-up');
-      
-      scrollElements.forEach((el) => {
-        const elementTop = el.getBoundingClientRect().top;
-        const isInView = elementTop <= 
-          ((window.innerHeight || document.documentElement.clientHeight) * (80/100));
-          
-        if (isInView) {
-          el.classList.add('visible');
-        }
+    if (!isLoading) {
+      // Smooth scroll
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Animate section titles
+      gsap.utils.toArray('.section-title').forEach((title) => {
+        gsap.from(title, {
+          scrollTrigger: {
+            trigger: title,
+            start: 'top 80%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none reverse',
+          },
+          y: 50,
+          opacity: 0,
+          duration: 1,
+          ease: 'power3.out',
+        });
       });
-    };
-    
-    // Run once when component mounts
-    handleScrollAnimation();
-    
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScrollAnimation);
-    
-    // Cleanup function
-    return () => {
-      window.removeEventListener('scroll', handleScrollAnimation);
-    };
-  }, []);
+
+      // Animate sections with fade and slide
+      gsap.utils.toArray('section').forEach((section) => {
+        gsap.from(section, {
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 85%',
+            end: 'bottom 15%',
+            toggleActions: 'play none none reverse',
+          },
+          y: 100,
+          opacity: 0,
+          duration: 1.2,
+          ease: 'power3.out',
+        });
+      });
+
+      // Parallax effect for hero section
+      gsap.to('.hero-content', {
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+        },
+        y: 200,
+        opacity: 0.5,
+        ease: 'none',
+      });
+    }
+  }, [isLoading]);
 
   if (isLoading) {
     return (
