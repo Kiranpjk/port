@@ -1,198 +1,126 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import { ArrowUpRight, Search, Star, GitFork } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { SectionHeading } from '@/components/ui/section-heading';
 
 export default function Projects({ repos }) {
-  const [filter, setFilter] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [query, setQuery] = useState('');
+  const [language, setLanguage] = useState('all');
 
-  // Extract unique languages for filters
   const languages = useMemo(() => {
-    const langs = [...new Set(repos.map(repo => repo.language).filter(Boolean))];
-    return ['all', ...langs];
+    const unique = [...new Set(repos.map((repo) => repo.language).filter(Boolean))];
+    return ['all', ...unique.slice(0, 7)];
   }, [repos]);
 
-  // Filter and search repositories
-  const filteredRepos = useMemo(() => {
-    let filtered = repos;
-
-    if (filter !== 'all') {
-      filtered = filtered.filter(repo => repo.language === filter);
-    }
-
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        repo =>
-          repo.name.toLowerCase().includes(query) ||
-          repo.description.toLowerCase().includes(query) ||
-          repo.topics.some(topic => topic.toLowerCase().includes(query))
-      );
-    }
-
-    return filtered;
-  }, [repos, filter, searchQuery]);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
+  const filtered = useMemo(() => {
+    const lower = query.trim().toLowerCase();
+    return repos.filter((repo) => {
+      const matchesLanguage = language === 'all' || repo.language === language;
+      const matchesQuery =
+        !lower ||
+        repo.name.toLowerCase().includes(lower) ||
+        (repo.description || '').toLowerCase().includes(lower) ||
+        repo.topics.some((topic) => topic.toLowerCase().includes(lower));
+      return matchesLanguage && matchesQuery;
+    });
+  }, [repos, language, query]);
 
   return (
-    <section id="projects" className="py-20 relative z-10">
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">
-            My Projects
-          </h2>
-          <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            Explore my latest work and open-source contributions
-          </p>
-        </motion.div>
+    <section id="projects" className="section">
+      <div className="section-shell px-4">
+        <SectionHeading
+          eyebrow="Projects"
+          title="Selected work from GitHub"
+          description="Live repository data from the GitHub API, filtered to highlight relevant builds and experiments."
+        />
 
-        {/* Search and Filter */}
-        <div className="mb-12 flex flex-col md:flex-row gap-4 items-center justify-between">
-          <div className="relative w-full md:w-96">
+        <div className="mb-6 grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
+          <label className="surface flex items-center gap-2 px-3 py-2">
+            <Search className="h-4 w-4 text-muted-foreground" />
             <input
-              type="text"
-              placeholder="Search projects..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 pl-12 rounded-lg glass text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
+              type="search"
+              className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search repos by name, description, or topic"
+              aria-label="Search projects"
             />
-            <i className="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-text-muted"></i>
-          </div>
-
+          </label>
           <div className="flex flex-wrap gap-2">
-            {languages.map((lang) => (
-              <button
-                key={lang}
-                onClick={() => setFilter(lang)}
-                className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                  filter === lang
-                    ? 'bg-primary text-white'
-                    : 'glass text-text-secondary hover:text-primary'
-                }`}
+            {languages.map((item) => (
+              <Button
+                key={item}
+                variant={language === item ? 'default' : 'secondary'}
+                size="sm"
+                onClick={() => setLanguage(item)}
               >
-                {lang === 'all' ? 'All' : lang}
-              </button>
+                {item === 'all' ? 'All' : item}
+              </Button>
             ))}
           </div>
         </div>
 
-        {/* Projects Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {filteredRepos.map((repo) => (
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {filtered.map((repo, index) => (
             <motion.div
               key={repo.id}
-              variants={itemVariants}
-              className="glass p-6 rounded-xl card-hover"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.03 }}
             >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-primary mb-2">
-                    {repo.name}
-                  </h3>
-                  <p className="text-text-secondary text-sm line-clamp-3">
-                    {repo.description}
-                  </p>
-                </div>
-              </div>
-
-              {/* Technologies/Topics */}
-              {repo.topics && repo.topics.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {repo.topics.slice(0, 3).map((topic, index) => (
-                    <span
-                      key={index}
-                      className="px-2 py-1 text-xs rounded-full bg-primary/20 text-primary"
-                    >
-                      {topic}
+              <Card className="h-full transition-transform duration-200 hover:-translate-y-1">
+                <CardHeader>
+                  <CardTitle className="truncate text-base">{repo.name}</CardTitle>
+                  <CardDescription className="min-h-[3.75rem] overflow-hidden">{repo.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="mb-3 flex items-center gap-3 text-xs text-muted-foreground">
+                    {repo.language ? <span>{repo.language}</span> : null}
+                    <span className="inline-flex items-center gap-1">
+                      <Star className="h-3.5 w-3.5" /> {repo.stars}
                     </span>
-                  ))}
-                </div>
-              )}
+                    <span className="inline-flex items-center gap-1">
+                      <GitFork className="h-3.5 w-3.5" /> {repo.forks}
+                    </span>
+                  </div>
 
-              {/* Stats */}
-              <div className="flex items-center gap-4 mb-4 text-text-muted text-sm">
-                {repo.language && (
-                  <span className="flex items-center gap-1">
-                    <i className="fas fa-code"></i>
-                    {repo.language}
-                  </span>
-                )}
-                <span className="flex items-center gap-1">
-                  <i className="fas fa-star"></i>
-                  {repo.stars}
-                </span>
-                <span className="flex items-center gap-1">
-                  <i className="fas fa-code-branch"></i>
-                  {repo.forks}
-                </span>
-              </div>
+                  <div className="mb-4 flex flex-wrap gap-1.5">
+                    {repo.topics.slice(0, 3).map((topic) => (
+                      <Badge key={topic} variant="secondary">
+                        {topic}
+                      </Badge>
+                    ))}
+                  </div>
 
-              {/* Links */}
-              <div className="flex gap-3">
-                <a
-                  href={repo.repoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 btn btn-secondary text-center text-sm"
-                >
-                  <i className="fab fa-github mr-2"></i>
-                  Code
-                </a>
-                {repo.homepage && (
-                  <a
-                    href={repo.homepage}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 btn btn-primary text-center text-sm"
-                  >
-                    <i className="fas fa-external-link-alt mr-2"></i>
-                    Live
-                  </a>
-                )}
-              </div>
+                  <div className="flex gap-2">
+                    <Button asChild variant="outline" size="sm" className="flex-1">
+                      <a href={repo.repoUrl} target="_blank" rel="noopener noreferrer">
+                        Code <ArrowUpRight className="h-3.5 w-3.5" />
+                      </a>
+                    </Button>
+                    {repo.homepage ? (
+                      <Button asChild size="sm" className="flex-1">
+                        <a href={repo.homepage} target="_blank" rel="noopener noreferrer">
+                          Live <ArrowUpRight className="h-3.5 w-3.5" />
+                        </a>
+                      </Button>
+                    ) : null}
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
-        {filteredRepos.length === 0 && (
-          <div className="text-center py-20">
-            <i className="fas fa-search text-6xl text-text-muted mb-4"></i>
-            <p className="text-xl text-text-secondary">No projects found</p>
-          </div>
-        )}
+        {filtered.length === 0 ? (
+          <p className="mt-8 text-center text-muted-foreground">No repositories match this filter.</p>
+        ) : null}
       </div>
     </section>
   );

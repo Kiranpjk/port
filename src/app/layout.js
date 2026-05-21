@@ -1,18 +1,21 @@
 import './globals.css';
+import { ThemeProvider } from '@/components/theme-provider';
 
 export const metadata = {
-  title: 'Jaya Kiran - Developer Portfolio',
-  description: 'Modern developer portfolio showcasing projects, skills, and experience with Next.js, Three.js, and GSAP',
-  keywords: 'developer, portfolio, react, nextjs, threejs, full-stack',
+  title: 'Jaya Kiran • Portfolio',
+  description:
+    'Full-stack developer portfolio featuring modern web experiences, polished UI/UX, and selected projects.',
+  keywords: 'developer portfolio, next.js, react, framer motion, ui/ux',
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-      </head>
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
