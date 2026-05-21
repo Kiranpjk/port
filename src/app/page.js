@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { fetchGitHubUser, fetchGitHubRepos } from '@/lib/github';
+import { motion } from 'framer-motion';
+import { fetchGitHubRepos, fetchGitHubUser } from '@/lib/github';
 
-// Dynamically import components with no SSR
 const ThreeBackground = dynamic(() => import('@/components/ThreeBackground'), { ssr: false });
 const Header = dynamic(() => import('@/components/Header'), { ssr: false });
 const Hero = dynamic(() => import('@/components/Hero'), { ssr: false });
@@ -24,10 +24,7 @@ export default function Home() {
   useEffect(() => {
     async function loadData() {
       try {
-        const [user, repositories] = await Promise.all([
-          fetchGitHubUser(),
-          fetchGitHubRepos()
-        ]);
+        const [user, repositories] = await Promise.all([fetchGitHubUser(), fetchGitHubRepos()]);
         setUserData(user);
         setRepos(repositories);
       } catch (error) {
@@ -36,17 +33,21 @@ export default function Home() {
         setLoading(false);
       }
     }
+
     loadData();
   }, []);
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-bg-dark">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
-          <p className="mt-4 text-text-secondary">Loading portfolio...</p>
-        </div>
-      </div>
+      <main className="flex min-h-screen items-center justify-center bg-background">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="surface p-8 text-center"
+        >
+          <p className="text-sm font-medium text-muted-foreground">Loading portfolio…</p>
+        </motion.div>
+      </main>
     );
   }
 

@@ -1,157 +1,78 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { gsap } from 'gsap';
+import Image from 'next/image';
+import { ArrowUpRight, GitBranch, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 export default function Hero({ userData }) {
-  const titleRef = useRef(null);
-  const subtitleRef = useRef(null);
-
-  useEffect(() => {
-    // GSAP animations
-    const tl = gsap.timeline();
-    
-    tl.from(titleRef.current, {
-      y: 100,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out',
-    })
-    .from(subtitleRef.current, {
-      y: 50,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power3.out',
-    }, '-=0.5');
-
-    // Typing effect
-    const roles = ['Full-Stack Developer', 'UI/UX Designer', 'React Expert', 'Creative Coder'];
-    let roleIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    const typingElement = document.getElementById('typing-text');
-
-    const type = () => {
-      const currentRole = roles[roleIndex];
-      
-      if (isDeleting) {
-        typingElement.textContent = currentRole.substring(0, charIndex - 1);
-        charIndex--;
-      } else {
-        typingElement.textContent = currentRole.substring(0, charIndex + 1);
-        charIndex++;
-      }
-
-      if (!isDeleting && charIndex === currentRole.length) {
-        setTimeout(() => (isDeleting = true), 1500);
-      } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        roleIndex = (roleIndex + 1) % roles.length;
-      }
-
-      const speed = isDeleting ? 50 : 100;
-      setTimeout(type, speed);
-    };
-
-    type();
-  }, []);
+  const name = userData?.name || 'Jaya Kiran';
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center pt-20">
-      <div className="container mx-auto px-6">
-        <div className="text-center z-10 relative">
+    <section id="home" className="section relative flex min-h-screen items-center pt-20">
+      <div className="section-shell w-full px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55 }}
+          className="mx-auto grid max-w-5xl gap-10 md:grid-cols-[1.2fr_0.8fr] md:items-center"
+        >
+          <div>
+            <Badge className="mb-4" variant="secondary">
+              <Sparkles className="mr-1 h-3.5 w-3.5" /> Available for impactful product work
+            </Badge>
+            <h1 className="text-balance text-4xl font-bold leading-tight md:text-6xl">
+              Crafting fast, delightful, and conversion-ready web experiences.
+            </h1>
+            <p className="mt-5 max-w-xl text-balance text-base text-muted-foreground md:text-lg">
+              I&apos;m {name}, a full-stack developer focused on polished interfaces, robust architecture, and product quality.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button asChild size="lg">
+                <a href="#projects">
+                  View Projects <ArrowUpRight className="h-4 w-4" />
+                </a>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <a href={userData?.html_url || 'https://github.com/Kiranpjk'} target="_blank" rel="noopener noreferrer">
+                  <GitBranch className="h-4 w-4" /> GitHub
+                </a>
+              </Button>
+            </div>
+          </div>
+
           <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="mb-8"
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="surface p-6"
           >
-            {userData?.avatar_url && (
-              <img
-                src={userData.avatar_url}
-                alt={userData.name || 'Profile'}
-                className="w-32 h-32 rounded-full mx-auto border-4 border-primary shadow-2xl"
+            <div className="flex items-center gap-4">
+              <Image
+                src={userData?.avatar_url || 'https://avatars.githubusercontent.com/u/0?v=4'}
+                alt={`${name} profile avatar`}
+                width={64}
+                height={64}
+                className="h-16 w-16 rounded-full border border-border/80"
               />
-            )}
+              <div>
+                <p className="font-semibold">{name}</p>
+                <p className="text-sm text-muted-foreground">@{userData?.login || 'Kiranpjk'}</p>
+              </div>
+            </div>
+            <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
+              <div className="rounded-lg bg-muted/60 p-3">
+                <p className="text-muted-foreground">Repos</p>
+                <p className="text-lg font-semibold">{userData?.public_repos ?? '—'}</p>
+              </div>
+              <div className="rounded-lg bg-muted/60 p-3">
+                <p className="text-muted-foreground">Followers</p>
+                <p className="text-lg font-semibold">{userData?.followers ?? '—'}</p>
+              </div>
+            </div>
           </motion.div>
-
-          <h1 ref={titleRef} className="text-5xl md:text-7xl font-bold mb-6">
-            Hi, I'm{' '}
-            <span className="gradient-text">
-              {userData?.name || 'Jaya Kiran'}
-            </span>
-          </h1>
-
-          <h2 ref={subtitleRef} className="text-2xl md:text-4xl text-text-secondary mb-8">
-            I'm a <span id="typing-text" className="text-primary font-bold"></span>
-            <span className="animate-pulse">|</span>
-          </h2>
-
-          <p className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto mb-12">
-            {userData?.bio || 'Creating seamless digital experiences with modern web technologies'}
-          </p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex flex-wrap gap-4 justify-center"
-          >
-            <a href="#projects" className="btn btn-primary">
-              <i className="fas fa-rocket mr-2"></i>
-              View My Work
-            </a>
-            <a href="#contact" className="btn btn-secondary">
-              <i className="fas fa-paper-plane mr-2"></i>
-              Get In Touch
-            </a>
-          </motion.div>
-
-          {/* Social Links */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1 }}
-            className="flex gap-6 justify-center mt-12"
-          >
-            {userData?.html_url && (
-              <a
-                href={userData.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-3xl text-text-secondary hover:text-primary transition-colors"
-              >
-                <i className="fab fa-github"></i>
-              </a>
-            )}
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-3xl text-text-secondary hover:text-primary transition-colors"
-            >
-              <i className="fab fa-linkedin"></i>
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-3xl text-text-secondary hover:text-primary transition-colors"
-            >
-              <i className="fab fa-twitter"></i>
-            </a>
-          </motion.div>
-
-          {/* Scroll Indicator */}
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-          >
-            <i className="fas fa-chevron-down text-3xl text-primary"></i>
-          </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,28 +1,71 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: ['class'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    container: {
+      center: true,
+      padding: '1rem',
+      screens: {
+        '2xl': '1280px',
+      },
+    },
     extend: {
       colors: {
-        primary: '#6366f1',
-        'primary-light': '#818cf8',
-        'primary-dark': '#4f46e5',
-        secondary: '#ec4899',
-        'secondary-light': '#f472b6',
-        accent: '#14b8a6',
-        'bg-dark': '#0a0a0f',
-        'bg-darker': '#050508',
-        'bg-card': 'rgba(15, 15, 25, 0.8)',
-        'text-primary': '#f8fafc',
-        'text-secondary': '#cbd5e1',
-        'text-muted': '#94a3b8',
-        'border-color': 'rgba(148, 163, 184, 0.1)',
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+      },
+      borderRadius: {
+        xl: 'var(--radius-xl)',
+        lg: 'var(--radius-lg)',
+        md: 'var(--radius-md)',
+      },
+      boxShadow: {
+        soft: 'var(--shadow-soft)',
+        glow: 'var(--shadow-glow)',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+        spotlight: {
+          '0%, 100%': { opacity: 0.35 },
+          '50%': { opacity: 0.75 },
+        },
+      },
+      animation: {
+        float: 'float 6s ease-in-out infinite',
+        spotlight: 'spotlight 6s ease-in-out infinite',
       },
     },
   },
   plugins: [],
-}
+};

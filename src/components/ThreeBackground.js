@@ -1,55 +1,23 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial } from '@react-three/drei';
-
-function StarField(props) {
-  const ref = useRef();
-  
-  // Generate random sphere positions
-  const sphere = useMemo(() => {
-    const positions = new Float32Array(5000 * 3);
-    for (let i = 0; i < 5000; i++) {
-      const radius = 1.5;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos((Math.random() * 2) - 1);
-      
-      positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      positions[i * 3 + 2] = radius * Math.cos(phi);
-    }
-    return positions;
-  }, []);
-
-  useFrame((state, delta) => {
-    if (ref.current) {
-      ref.current.rotation.x -= delta / 10;
-      ref.current.rotation.y -= delta / 15;
-    }
-  });
-
-  return (
-    <group rotation={[0, 0, Math.PI / 4]}>
-      <Points ref={ref} positions={sphere} stride={3} frustumCulled={false} {...props}>
-        <PointMaterial
-          transparent
-          color="#818cf8"
-          size={0.002}
-          sizeAttenuation={true}
-          depthWrite={false}
-        />
-      </Points>
-    </group>
-  );
-}
+import { motion } from 'framer-motion';
 
 export default function ThreeBackground() {
   return (
-    <div className="fixed inset-0 z-0">
-      <Canvas camera={{ position: [0, 0, 1] }}>
-        <StarField />
-      </Canvas>
+    <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-grid">
+      <motion.div
+        initial={{ opacity: 0.35 }}
+        animate={{ opacity: [0.25, 0.45, 0.25] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute -top-24 left-1/3 h-72 w-72 rounded-full bg-primary/25 blur-3xl"
+      />
+      <motion.div
+        initial={{ opacity: 0.25 }}
+        animate={{ opacity: [0.2, 0.4, 0.2] }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+        className="absolute bottom-0 right-16 h-80 w-80 rounded-full bg-accent/20 blur-3xl"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/80 to-background" />
     </div>
   );
 }

@@ -1,111 +1,82 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { SectionHeading } from '@/components/ui/section-heading';
+
+const skills = [
+  {
+    title: 'Frontend',
+    items: [
+      ['React / Next.js', 95],
+      ['TypeScript', 90],
+      ['Tailwind CSS', 95],
+      ['Framer Motion', 88],
+    ],
+  },
+  {
+    title: 'Backend',
+    items: [
+      ['Node.js', 88],
+      ['REST APIs', 90],
+      ['Databases', 84],
+      ['Auth & Security', 80],
+    ],
+  },
+  {
+    title: 'Product Delivery',
+    items: [
+      ['Accessibility', 90],
+      ['Performance', 92],
+      ['DX Tooling', 84],
+      ['Testing mindset', 82],
+    ],
+  },
+];
 
 export default function Skills() {
-  const skillsRef = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.skill-bar', {
-        scrollTrigger: {
-          trigger: '.skills-container',
-          start: 'top 80%',
-        },
-        width: 0,
-        duration: 1.5,
-        ease: 'power3.out',
-        stagger: 0.1,
-      });
-    }, skillsRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  const skillCategories = [
-    {
-      title: 'Frontend',
-      icon: 'fa-laptop-code',
-      skills: [
-        { name: 'React/Next.js', level: 95 },
-        { name: 'TypeScript', level: 90 },
-        { name: 'TailwindCSS', level: 95 },
-        { name: 'Three.js', level: 80 },
-      ],
-    },
-    {
-      title: 'Backend',
-      icon: 'fa-server',
-      skills: [
-        { name: 'Node.js', level: 88 },
-        { name: 'Express', level: 85 },
-        { name: 'MongoDB', level: 82 },
-        { name: 'PostgreSQL', level: 80 },
-      ],
-    },
-    {
-      title: 'Tools & Others',
-      icon: 'fa-tools',
-      skills: [
-        { name: 'Git', level: 92 },
-        { name: 'Docker', level: 75 },
-        { name: 'AWS', level: 70 },
-        { name: 'CI/CD', level: 78 },
-      ],
-    },
-  ];
-
   return (
-    <section id="skills" className="py-20 relative z-10" ref={skillsRef}>
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">
-            Skills & Expertise
-          </h2>
-          <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            Technologies and tools I work with
-          </p>
-        </motion.div>
+    <section id="skills" className="section">
+      <div className="section-shell px-4">
+        <SectionHeading
+          eyebrow="Skills"
+          title="Capability map"
+          description="A practical toolkit for building resilient products and polished interfaces."
+        />
 
-        <div className="grid md:grid-cols-3 gap-8 skills-container">
-          {skillCategories.map((category, idx) => (
+        <div className="grid gap-4 md:grid-cols-3">
+          {skills.map((group, idx) => (
             <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 50 }}
+              key={group.title}
+              initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="glass p-6 rounded-xl"
+              transition={{ delay: idx * 0.08 }}
             >
-              <div className="flex items-center mb-6">
-                <i className={`fas ${category.icon} text-3xl text-primary mr-3`}></i>
-                <h3 className="text-2xl font-bold">{category.title}</h3>
-              </div>
-
-              <div className="space-y-4">
-                {category.skills.map((skill, index) => (
-                  <div key={index}>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-text-secondary">{skill.name}</span>
-                      <span className="text-primary font-bold">{skill.level}%</span>
+              <Card>
+                <CardHeader>
+                  <CardTitle>{group.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {group.items.map(([label, value]) => (
+                    <div key={label}>
+                      <div className="mb-1 flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">{label}</span>
+                        <span className="font-semibold">{value}%</span>
+                      </div>
+                      <div className="h-2 rounded-full bg-muted">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${value}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.65 }}
+                          className="h-2 rounded-full bg-gradient-to-r from-primary to-accent"
+                        />
+                      </div>
                     </div>
-                    <div className="w-full bg-bg-darker rounded-full h-2 overflow-hidden">
-                      <div
-                        className="skill-bar h-full bg-gradient-to-r from-primary to-secondary rounded-full"
-                        style={{ width: `${skill.level}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </CardContent>
+              </Card>
             </motion.div>
           ))}
         </div>
