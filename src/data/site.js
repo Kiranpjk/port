@@ -6,7 +6,7 @@ export const profile = {
   pitch:
     'I take a product from user research to hi-fi screens in Figma, then build it in React.',
   location: 'Jena, Germany',
-  status: 'Looking for a Werkstudent role in UI/UX design',
+  status: 'Looking for a Werkstudent role in UI/UX design & Software Roles',
   email: 'jayakiranpjk@gmail.com',
   github: 'https://github.com/Kiranpjk',
   linkedin: 'https://www.linkedin.com/in/jaya-kiran/',
@@ -107,7 +107,7 @@ export const code = [
     ],
   },
   {
-    title: 'T Group',
+    title: 'T Groups Imports and Exports',
     line: 'Company website for an Indian agricultural exporter, with product, market and quote pages.',
     stack: 'Next.js, TypeScript',
     image: ['/work/tgroups.webp', 'T Group Imports and Exports home page'],
