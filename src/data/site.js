@@ -89,7 +89,7 @@ export const rapidgigs = {
     ['AI', 'Job recommendations and generated 30-second job videos, with fallback between providers.'],
   ],
   note: 'Presented as a research paper at ICICST 2026, NIT Jalandhar.',
-  links: [
+  image: ['/work/rapidgigs.webp', 'RapidGigs home page with a search bar, category filters and a grid of job cards'],  links: [
     ['Live site', 'https://rapid-gigs.vercel.app'],
     ['Code', 'https://github.com/Kiranpjk/RapidGigs'],
   ],

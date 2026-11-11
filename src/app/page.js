@@ -180,14 +180,23 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <dl className="md:col-span-7">
-              {rapidgigs.parts.map(([name, text]) => (
-                <div key={name} className="grid gap-2 border-t border-ink py-5 md:grid-cols-[11rem_1fr] md:gap-6">
-                  <dt className="font-display text-3xl uppercase">{name}</dt>
-                  <dd className="leading-relaxed text-soft">{text}</dd>
-                </div>
-              ))}
-            </dl>
+            <div className="md:col-span-7">
+              <Image
+                src={rapidgigs.image[0]}
+                alt={rapidgigs.image[1]}
+                width={1200}
+                height={750}
+                className="mb-8 h-auto w-full rounded-xl border border-line"
+              />
+              <dl>
+                {rapidgigs.parts.map(([name, text]) => (
+                  <div key={name} className="grid gap-2 border-t border-ink py-5 md:grid-cols-[11rem_1fr] md:gap-6">
+                    <dt className="font-display text-3xl uppercase">{name}</dt>
+                    <dd className="leading-relaxed text-soft">{text}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </article>
 
           <ol>
